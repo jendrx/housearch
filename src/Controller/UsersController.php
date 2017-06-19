@@ -143,7 +143,15 @@ class UsersController extends AppController
             if ($user) {
                 $this->Auth->setUser($user);
 
-                echo json_encode($user);
+                if($user['role_id'] == 2)
+                {
+                    return $this->redirect(['controller' => 'sellers', 'action' =>  'home']);
+                }
+
+                if($user['role_id'] == 3)
+                {
+                    return $this->redirect(['controller' => 'buyers', 'action' => 'home']);
+                }
                 //return $this->redirect($this->Auth->redirectUrl());
             }
             $this->Flash->error(__('Invalid username or password, try again'));

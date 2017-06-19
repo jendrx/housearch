@@ -58,4 +58,9 @@ class GaragesTable extends Table
 
         return $validator;
     }
+
+    public function getList()
+    {
+        return $this->find('list',['keyField' => 'id', 'valueField' => 'description']);
+    }
 }

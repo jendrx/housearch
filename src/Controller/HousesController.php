@@ -63,14 +63,14 @@ class HousesController extends AppController
             }
             $this->Flash->error(__('The house could not be saved. Please, try again.'));
         }
-        $energyCertifications = $this->Houses->EnergyCertifications->find('list', ['limit' => 200]);
-        $conservations = $this->Houses->Conservations->find('list', ['limit' => 200]);
-        $conditions = $this->Houses->Conditions->find('list', ['limit' => 200]);
-        $garages = $this->Houses->Garages->find('list', ['limit' => 200]);
-        $outbuildings = $this->Houses->Outbuildings->find('list', ['limit' => 200]);
+        $energyCertifications = $this->Houses->EnergyCertifications->getList();
+        $conservations = $this->Houses->Conservations->getList();
+        $conditions = $this->Houses->Conditions->getList();
+        $garages = $this->Houses->Garages->getList();
+        $outbuildings = $this->Houses->Outbuildings->getList();
         $zones = $this->Houses->Zones->find('list', ['limit' => 200]);
         $sellers = $this->Houses->Sellers->find('list', ['limit' => 200]);
-        $houseTypes = $this->Houses->HouseTypes->find('list', ['limit' => 200]);
+        $houseTypes = $this->Houses->HouseTypes->getList();
         $this->set(compact('house', 'energyCertifications', 'conservations', 'conditions', 'garages', 'outbuildings', 'zones', 'sellers', 'houseTypes'));
         $this->set('_serialize', ['house']);
     }
