@@ -96,8 +96,6 @@
 
         </div>
 
-
-
         <div class="row">
             <div class="large-6 columns">
                 <?=  $this->Form->control('lat'); ?>
@@ -126,7 +124,7 @@
 
         <div class="row">
             <div class="large-6 columns">
-                <?= $this->Form->button(__('Submit')) ?>
+                <?= $this->Form->button(__('Submit'),['class' => 'button']) ?>
             </div>
 
         </div>
