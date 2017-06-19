@@ -1,0 +1,65 @@
+body{
+    height:100%;
+}
+
+header{
+    background: #deb36c;
+}
+
+.top-bar{
+    background: #deb36c;
+}
+
+
+
+/* flash messages*/
+div.message
+{
+    .message;
+    width:50%;
+    margin: 0 auto;
+}
+
+
+footer {
+    height: 250px;
+    background-color: #4d4d4d;
+    /*padding: 100px 0px;*/
+}
+
+.wrap {
+    width: 90%;
+    margin: 0 auto;
+
+}
+
+.main{
+
+}
+
+#wrap{
+    min-height: 250vh;
+    margin-bottom: -200px;
+
+}
+
+
+
+
+
+/* fieldset legend remove blue bar*/
+.fieldset legend
+{
+    background: none;
+}
+
+.info_content{
+    padding : 80px 80px;
+}
+
+fieldset legend{
+    border-bottom: none;
+    width : auto;
+
+}
+
