@@ -33,6 +33,7 @@
 
                 if ($this->Sellers->save($seller)) {
                     $this->Flash->success(__('Seller has been saved'));
+                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
                 }
 
             }

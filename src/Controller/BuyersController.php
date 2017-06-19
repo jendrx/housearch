@@ -37,7 +37,7 @@
                 if ($this->Buyers->save($buyer)) {
 
                     $this->Flash->success(__('Buyer has been saved'));
-                    $this->redirect(['controller' => 'Users', 'action' => 'login']);
+                    return $this->redirect(['controller' => 'Users', 'action' => 'login']);
                 }
             }
 
