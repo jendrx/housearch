@@ -21,6 +21,9 @@
 <?= $this->Html->css('jquery-ui-1.12.1/jquery-ui.min.css')?>
 <?= $this->Html->css('jquery-ui-1.12.1/jquery-ui.theme.min.css')?>
 <?= $this->Html->css('font-awesome.min.css')?>
+
+
+<?= $this->Html->css('//api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css')?>
 <?= $this->Html->css('app.css') ?>
 
 
