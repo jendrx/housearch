@@ -12,9 +12,6 @@
         </div>
         <div class="top-bar-right">
             <ul class="menu">
-                <li><a href="#">One</a></li>
-                <li><a href="#">Two</a></li>
-                <li><a href="#">Three</a></li>
             </ul>
         </div>
     </div>
