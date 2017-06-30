@@ -42,14 +42,14 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <header>
 
         <?php if ($authUser == null):
-            echo $this->element('header');
+            echo $this->element('Headers/header');
             else:
                 if($authUser['role_id'] == 2):
-                    echo $this->element('sellersHeader');
+                    echo $this->element('Headers/sellersHeader');
                 elseif ($authUser['role_id'] == 3):
-                    echo $this->element('buyersHeader');
+                    echo $this->element('Headers/buyersHeader');
                 else:
-                    echo $this->element('othersHeader');
+                    echo $this->element('Headers/othersHeader');
                 endif;
         endif;
             ?>

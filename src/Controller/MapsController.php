@@ -27,18 +27,17 @@
 
             $params = $this->request->getQueryParams();
             $id = $params['id'];
-            $response = '';
+
             if ($this->request->is('ajax')) {
 
-                $response = 'ahahah';
                 // get camera center coordintes
                 $camera = json_decode($this->Regions->getCentroid($id));
 
                 // get  zones geoJson info  that belongs to $id
                 $geoJSON = $this->Regions->toFeatureCollection($this->Zones->getParishesZonesGeoJSON($id));
             }
-            $this->set(compact('camera', 'geoJSON','response'));
-            $this->set('_serialize', ['camera', 'geoJSON','response']);
+            $this->set(compact('camera', 'geoJSON', 'response'));
+            $this->set('_serialize', ['camera', 'geoJSON', 'response']);
         }
 
 
