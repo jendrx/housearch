@@ -1,10 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: rom
- * Date: 6/7/17
- * Time: 5:06 PM
- */?>
+    /**
+     * Created by PhpStorm.
+     * User: rom
+     * Date: 6/30/17
+     * Time: 11:37 AM
+     */?>
+
 <div class="top-bar">
     <div class="wrap">
         <div class="top-bar-left">
@@ -13,7 +14,9 @@
         </div>
         <div class="top-bar-right">
             <ul class="menu menu-hover-lines">
+                <li><?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'Logout'])?></li>
             </ul>
         </div>
     </div>
 </div>
+

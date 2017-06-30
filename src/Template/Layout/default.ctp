@@ -29,10 +29,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
     <?= $this->Html->script('jquery-ui-1.12.1/jquery-ui.min.js') ?>
     <?= $this->Html->script('//cdn.jsdelivr.net/foundation/6.0.6/foundation.min.js') ?>
     <?= $this->Html->script('//api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js')?>
-    <?= $this->Html->script('//npmcdn.com/@turf/turf/turf.min.js')?>
 
 
-    <?= $this->Html->script('vendor/app.js') ?>
+    <!--<?= $this->Html->script('vendor/app.js') ?>-->
 
 
 
@@ -41,7 +40,19 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
 <div id="wrap">
     <header>
-        <?php echo $this->element('header') ?>
+
+        <?php if ($authUser == null):
+            echo $this->element('header');
+            else:
+                if($authUser['role_id'] == 2):
+                    echo $this->element('sellersHeader');
+                elseif ($authUser['role_id'] == 3):
+                    echo $this->element('buyersHeader');
+                else:
+                    echo $this->element('othersHeader');
+                endif;
+        endif;
+            ?>
     </header>
 
 
@@ -54,8 +65,8 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
         </div>
     </section>
 
-</div>
 
+</div>
 <footer>
     <div class="wrap ">
         <div class="col-lg-3"></div>
