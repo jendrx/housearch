@@ -32,9 +32,6 @@ class RegionsController extends AppController
             'contain' => ['ParentRegions']
         ];
         $regions = $this->paginate($this->Regions);
-
-        $this->Regions->recover();
-
         $this->set(compact('regions'));
         $this->set('_serialize', ['regions']);
     }
