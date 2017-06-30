@@ -22,6 +22,9 @@
 
         public function add()
         {
+
+
+
             $seller = $this->Sellers->newEntity();
 
             if ($this->request->is('post')) {
@@ -41,6 +44,8 @@
             $seller_types = $this->Sellers->SellerTypes->getTypesList();
             $addresses = $this->Sellers->Addresses->find('all');
 
+
+
             $this->set(compact('seller', 'seller_types'));
             $this->set('_serialize', ['seller', 'seller_types']);
 
@@ -49,7 +54,6 @@
 
         public function home()
         {
-
         }
 
     }

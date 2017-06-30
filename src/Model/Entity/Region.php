@@ -10,7 +10,15 @@ use Cake\ORM\Entity;
  * @property string $name
  * @property string $geom
  * @property $geom_json
+ * @property int $admin_level
+ * @property int $parent_id
+ * @property string $parent_dicofre
+ * @property int $lft
+ * @property int $rght
+ * @property string $dicofre
  *
+ * @property \App\Model\Entity\ParentRegion $parent_region
+ * @property \App\Model\Entity\ChildRegion[] $child_regions
  * @property \App\Model\Entity\Zone[] $zones
  */
 class Region extends Entity

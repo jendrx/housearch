@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Controller\AppController;
+use Cake\Event\Event;
 
 /**
  * Houses Controller
@@ -62,15 +63,66 @@ class HousesController extends AppController
      */
     public function add()
     {
+        $this->loadModel('Regions');
+        $this->loadModel('Zones');
         $house = $this->Houses->newEntity();
         if ($this->request->is('post')) {
-            $house = $this->Houses->patchEntity($house, $this->request->getData());
-            if ($this->Houses->save($house)) {
-                $this->Flash->success(__('The house has been saved.'));
+            $data = $this->request->getData();
 
-                return $this->redirect(['action' => 'index']);
+            echo json_encode($data);
+            $zone_id = '';
+
+
+            // if absolute
+            if($data['lat'] != '' or $data['lon'] != '')
+            {
+                $zone_id = $this->Zones->getZoneIntersectPoint(floatval($data['lon']),floatval($data['lat']));
+
+                if($zone_id == null or $this->Zones->isResidual($zone_id))
+                {
+                    $this->Flash->error(__('This location is not allowed'));
+                }
             }
-            $this->Flash->error(__('The house could not be saved. Please, try again.'));
+            //if zonal
+            else
+            {
+                if($data['zone_id'] == '')
+                {
+                    $this->Flash->error(__('You must select a zone'));
+                }
+                else{
+                    $zone_id = $data['zone_id'];
+                }
+            }
+
+            if($zone_id != '')
+            {
+                $house->set('price', $data['price']);
+                $house->set('area', $data['area']);
+                $house->set('construction_year', $data['construction_year']);
+                $house->set('condition_id', $data['condition_id']);
+                $house->set('zone_id', $zone_id);
+                $house->set('rooms', $data['rooms']);
+                $house->set('garage_id', $data['garage_id']);
+                $house->set('outbuilding_id', $data['outbuilding_id']);
+                $house->set('outbuilding_area', $data['outbuilding_area']);
+                $house->set('energy_certification_id', $data['energy_certification_id']);
+                $house->set('energy_certification_year', $data['energy_certification_year']);
+                $house->set('house_type_id', $data['house_type_id']);
+                $house->set('url_ad', $data['url_ad']);
+                $house->set('lat',$data['lat']);
+                $house->set('lon',$data['lon']);
+
+                //"location":"1" get geom from lat lon
+                /*
+                if ($this->Houses->save($house)) {
+                    $this->Flash->success(__('The house has been saved.'));
+
+                    return $this->redirect(['action' => 'index']);
+                }*/
+                $this->Flash->error(__('The house could not be saved. Please, try again.'));
+            }
+
         }
         $energyCertifications = $this->Houses->EnergyCertifications->getList();
         $conservations = $this->Houses->Conservations->getList();
@@ -80,8 +132,11 @@ class HousesController extends AppController
         $zones = $this->Houses->Zones->find('list', ['limit' => 200]);
         $sellers = $this->Houses->Sellers->find('list', ['limit' => 200]);
         $houseTypes = $this->Houses->HouseTypes->getList();
-        $this->set(compact('house', 'energyCertifications', 'conservations', 'conditions', 'garages', 'outbuildings', 'zones', 'sellers', 'houseTypes'));
-        $this->set('_serialize', ['house']);
+
+        $parishes = $this->Regions->getParishesList();
+
+        $this->set(compact('house', 'energyCertifications', 'conservations', 'conditions', 'garages', 'outbuildings', 'zones', 'sellers', 'houseTypes','parishes'));
+        $this->set('_serialize', ['house','parishes']);
     }
 
     /**

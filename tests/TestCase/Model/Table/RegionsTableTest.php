@@ -29,7 +29,6 @@ class RegionsTableTest extends TestCase
         'app.houses',
         'app.energy_certifications',
         'app.conservations',
-        'app.conditions',
         'app.garages',
         'app.outbuildings',
         'app.sellers',
@@ -41,6 +40,7 @@ class RegionsTableTest extends TestCase
         'app.jobs',
         'app.incomes',
         'app.qualifications',
+        'app.conditions',
         'app.house_types',
         'app.samples'
     ];
@@ -85,6 +85,16 @@ class RegionsTableTest extends TestCase
      * @return void
      */
     public function testValidationDefault()
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
+
+    /**
+     * Test buildRules method
+     *
+     * @return void
+     */
+    public function testBuildRules()
     {
         $this->markTestIncomplete('Not implemented yet.');
     }

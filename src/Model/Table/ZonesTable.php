@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -84,5 +85,32 @@ class ZonesTable extends Table
         $rules->add($rules->existsIn(['region_id'], 'Regions'));
 
         return $rules;
+    }
+
+    public function getParishesZonesGeoJSON($id = null)
+    {
+        return $this->find('all',['conditions' => ['region_id' => $id], 'fields' => ['geom_json']]);
+    }
+
+    public function getZoneIntersectPoint($lng = null,$lat = null)
+    {
+        $conn = ConnectionManager::get('default');
+        $stmt = $conn->prepare('Select id as zone_id  from zones where ST_WITHIN(ST_SetSRID(ST_MakePoint(:r_lng, :r_lat),4326),geom)');
+
+
+        $stmt->bindValue('r_lat', $lat, 'float');
+        $stmt->bindValue('r_lng', $lng, 'float');
+
+
+        $stmt->execute();
+        $zone_id = $stmt->fetch('assoc')['zone_id'];
+
+        return $zone_id;
+
+    }
+
+    public function isResidual($id = null)
+    {
+        return $this->exists(['id' => $id, 'lug_code' => '999999']);
     }
 }

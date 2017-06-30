@@ -87,17 +87,20 @@ class HousesTable extends Table
 
         $validator
             ->integer('price')
-            ->allowEmpty('price');
+            ->notEmpty('price');
 
         $validator
             ->integer('area')
-            ->allowEmpty('area');
+            ->greaterThanOrEqual('area',0)
+            ->notEmpty('area');
 
         $validator
             ->integer('construction_year')
-            ->allowEmpty('construction_year');
+            ->greaterThanOrEqual('construction_year',0)
+            ->notEmpty('construction_year');
 
         $validator
+            ->url('url_ad')
             ->allowEmpty('url_ad');
 
         $validator
@@ -105,23 +108,26 @@ class HousesTable extends Table
 
         $validator
             ->integer('energy_certification_year')
+            ->greaterThanOrEqual('energy_certification_year',0)
             ->allowEmpty('energy_certification_year');
 
         $validator
             ->integer('outbuilding_area')
+            ->greaterThanOrEqual('outbuilding_area',0)
             ->allowEmpty('outbuilding_area');
 
         $validator
             ->integer('rooms')
-            ->allowEmpty('rooms');
+            ->greaterThanOrEqual('rooms',0)
+            ->notEmpty('rooms');
 
         $validator
-            ->numeric('lat')
-            ->allowEmpty('lat');
+            ->allowEmpty('lat')
+            ->latitude('lat');
 
         $validator
-            ->numeric('lon')
-            ->allowEmpty('lon');
+            ->allowEmpty('lon')
+            ->longitude('lon');
 
         $validator
             ->allowEmpty('location_json');
