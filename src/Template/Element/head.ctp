@@ -24,7 +24,6 @@
 <?= $this->Html->css('font-awesome.min.css')?>
 <?= $this->Html->css('//api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.css')?>
 
-
 <?= $this->Html->css('app.css') ?>
 
 

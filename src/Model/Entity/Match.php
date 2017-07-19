@@ -4,22 +4,19 @@ namespace App\Model\Entity;
 use Cake\ORM\Entity;
 
 /**
- * Sample Entity
+ * Match Entity
  *
  * @property int $id
- * @property string $name
- * @property string $url_pic
- * @property string $path_pic
- * @property string $point
- * @property $point_json
- * @property float $lat
- * @property float $lon
- * @property int $zone_id
- * @property int $zone_category_id
+ * @property int $poll_id
+ * @property int $round
+ * @property int $target
+ * @property int $optone
+ * @property int $opttwo
+ * @property int $winner
  *
- * @property \App\Model\Entity\Zone $zone
+ * @property \App\Model\Entity\Poll $poll
  */
-class Sample extends Entity
+class Match extends Entity
 {
 
     /**

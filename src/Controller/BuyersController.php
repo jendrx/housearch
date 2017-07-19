@@ -52,6 +52,19 @@
 
         public function home()
         {
+            $this->loadModel('Users');
+            $this->loadModel('Polls');
+
+            $user = $this->Auth->user();
+            $buyer = $this->Users->getBuyerId($user['id']);
+
+            $poll = $this->Polls->isOpen($buyer);
+
+            if( $poll === null )
+                $poll = $this->Polls->init($buyer);
+
+            $this->set(compact('user','buyer', 'poll'));
+            $this->set('_serialize',['user','buyer', 'poll']);
         }
 
     }

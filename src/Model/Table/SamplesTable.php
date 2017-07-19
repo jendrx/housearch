@@ -1,15 +1,19 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\ORM\Entity;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
  * Samples Model
  *
  * @property \Cake\ORM\Association\BelongsTo $Zones
+ * @property \Cake\ORM\Association\BelongsTo $ZoneCategories
+ * @property \Cake\ORM\Association\BelongsToMany $Polls
  *
  * @method \App\Model\Entity\Sample get($primaryKey, $options = [])
  * @method \App\Model\Entity\Sample newEntity($data = null, array $options = [])
@@ -39,6 +43,14 @@ class SamplesTable extends Table
         $this->belongsTo('Zones', [
             'foreignKey' => 'zone_id'
         ]);
+        $this->belongsTo('ZoneCategories', [
+            'foreignKey' => 'zone_category_id'
+        ]);
+        $this->belongsToMany('Polls', [
+            'foreignKey' => 'sample_id',
+            'targetForeignKey' => 'poll_id',
+            'joinTable' => 'samples_polls'
+        ]);
     }
 
     /**
@@ -56,26 +68,24 @@ class SamplesTable extends Table
             ->allowEmpty('name');
 
         $validator
-            ->allowEmpty('point');
-
-        $validator
             ->allowEmpty('url_pic');
 
         $validator
             ->allowEmpty('path_pic');
 
         $validator
+            ->allowEmpty('point');
+
+        $validator
+            ->allowEmpty('point_json');
+
+        $validator
             ->numeric('lat')
-            ->latitude('lat')
             ->allowEmpty('lat');
 
         $validator
             ->numeric('lon')
-            ->longitude('lon')
             ->allowEmpty('lon');
-
-        $validator
-            ->allowEmpty('point_json');
 
         return $validator;
     }
@@ -90,7 +100,28 @@ class SamplesTable extends Table
     public function buildRules(RulesChecker $rules)
     {
         $rules->add($rules->existsIn(['zone_id'], 'Zones'));
+        $rules->add($rules->existsIn(['zone_category_id'], 'ZoneCategories'));
 
         return $rules;
+    }
+
+    public function getRandomZoneCategorySample($zone = null)
+    {
+        return $this->find('all',['conditions' => ['zone_category_id' => $zone], 'order' => 'random()'])->first();
+
+    }
+
+    public function getRandomSamples()
+    {
+        $zoneCategories = TableRegistry::get('ZoneCategories');
+
+        $samples = [];
+        foreach($zoneCategories->getAllIds() as $zoneCategory)
+        {
+
+            array_push($samples,$this->getRandomZoneCategorySample($zoneCategory['id']));
+
+        }
+        return $samples;
     }
 }

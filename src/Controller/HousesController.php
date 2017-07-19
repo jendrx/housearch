@@ -65,7 +65,9 @@ class HousesController extends AppController
     {
         $this->loadModel('Regions');
         $this->loadModel('Zones');
+        $this->loadModel('Users');
         $house = $this->Houses->newEntity();
+
         if ($this->request->is('post')) {
             $data = $this->request->getData();
 
@@ -97,6 +99,10 @@ class HousesController extends AppController
 
             if($zone_id != '')
             {
+                $user = $this->Auth->user();
+
+                $seller_id = $this->Users->getSellerId($user['id']);
+                $house->set('seller_id',$seller_id);
                 $house->set('price', $data['price']);
                 $house->set('area', $data['area']);
                 $house->set('construction_year', $data['construction_year']);
@@ -113,13 +119,13 @@ class HousesController extends AppController
                 $house->set('lat',$data['lat']);
                 $house->set('lon',$data['lon']);
 
+
                 //"location":"1" get geom from lat lon
-                /*
                 if ($this->Houses->save($house)) {
                     $this->Flash->success(__('The house has been saved.'));
 
                     return $this->redirect(['action' => 'index']);
-                }*/
+                }
                 $this->Flash->error(__('The house could not be saved. Please, try again.'));
             }
 

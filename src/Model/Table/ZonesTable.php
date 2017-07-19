@@ -48,6 +48,10 @@ class ZonesTable extends Table
         $this->hasMany('Samples', [
             'foreignKey' => 'zone_id'
         ]);
+
+        $this->belongsTo('ZoneCategories', [
+            'foreignKey' => 'zone_category_id'
+        ]);
     }
 
     /**

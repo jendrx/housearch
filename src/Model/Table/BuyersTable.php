@@ -95,4 +95,5 @@ class BuyersTable extends Table
     {
         return $this->exists(['conditions' => ['user_id' => $user_id]]);
     }
+
 }

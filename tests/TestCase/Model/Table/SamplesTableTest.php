@@ -30,7 +30,6 @@ class SamplesTableTest extends TestCase
         'app.houses',
         'app.energy_certifications',
         'app.conservations',
-        'app.conditions',
         'app.garages',
         'app.outbuildings',
         'app.sellers',
@@ -42,6 +41,7 @@ class SamplesTableTest extends TestCase
         'app.jobs',
         'app.incomes',
         'app.qualifications',
+        'app.conditions',
         'app.house_types'
     ];
 

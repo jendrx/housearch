@@ -40,9 +40,4 @@
             $this->set('_serialize', ['camera', 'geoJSON', 'response']);
         }
 
-
-
-
-
-
     }

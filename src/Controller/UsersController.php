@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\ORM\TableRegistry;
 
 /**
  * Users Controller
@@ -191,4 +192,6 @@ class UsersController extends AppController
         $this->set('_serialize',['roles']);
 
     }
+
+
 }

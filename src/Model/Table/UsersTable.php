@@ -4,6 +4,7 @@ namespace App\Model\Table;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
+use Cake\ORM\TableRegistry;
 use Cake\Validation\Validator;
 
 /**
@@ -102,4 +103,28 @@ class UsersTable extends Table
 
         return $rules;
     }
+
+    public function getSellerId($id = null)
+    {
+        $sellers = TableRegistry::get('Sellers');
+
+        return $sellers->find('all',[ 'conditions' => ['user_id' => $id],'fields' => ['id']])->first()['id'];
+    }
+
+    public function getBuyerId($id = null)
+    {
+        $buyers = TableRegistry::get('Buyers');
+        return $buyers->find('all',[ 'conditions' => ['user_id' => $id],'fields' => ['id']])->first()['id'];
+    }
+
+    public function isBuyer($id = null)
+    {
+        return $this->exists(['id' => $id],['role_id' => 3]);
+    }
+
+    public function isSeller($id = null)
+    {
+        return $this->exists(['id' => $id],['role_id' => 2]);
+    }
+
 }
