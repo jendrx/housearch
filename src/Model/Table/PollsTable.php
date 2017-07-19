@@ -87,13 +87,6 @@ class PollsTable extends Table
 
 
 
-    // return poll if user has been opened
-    public function isOpen($buyer = null)
-    {
-        return $this->find('all',['conditions' =>[ 'and' => [['buyer_id' => $buyer],['finished is null']]]])->first();
-    }
-
-
     /** Create poll entity,associated samples and first round of matches*/
     /* if success return id of poll else return null*/
     public function init($buyer = null)
@@ -116,6 +109,12 @@ class PollsTable extends Table
 
         return $poll;
 
+    }
+
+    // return poll if user has been opened
+    public function isOpen($buyer = null)
+    {
+        return $this->find('all',['conditions' =>[ 'and' => [['buyer_id' => $buyer],['finished is null']]]])->first();
     }
 
     /* given a samples this method set a several mathces to a given poll*/
@@ -239,7 +238,6 @@ class PollsTable extends Table
 
         return $this->nextPair($poll);
     }
-
 
     public function setFinished($poll_id = null)
     {

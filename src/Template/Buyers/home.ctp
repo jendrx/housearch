@@ -18,8 +18,7 @@
 
 
 
-    function poll()
-    {
+    function poll() {
         var buyer;
         var current_match;
         var poll;
@@ -117,8 +116,7 @@
 
     }
 
-    function getNext(poll_id, callback)
-    {
+    function getNext(poll_id, callback) {
         $.ajax(
             {
                 type: 'get',
@@ -134,8 +132,6 @@
             });
 
     }
-
-
 
 
     $(document).ready(function () {
