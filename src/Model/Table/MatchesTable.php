@@ -90,17 +90,6 @@ class MatchesTable extends Table
         return $this->find('all');
     }
 
-    public function getHighestAtRound($poll = null,$round = null)
-    {
-        return $this->find('all',['fields' => 'optTwo','conditions' => [['and' => [['poll_id' => $poll], ['winner <> target' ], ['round' => $round]]]]]);
-    }
-
-    public function getLowestAtRound($poll = null,$round = null)
-    {
-        return $this->find('all',['fields' => 'optTwo', 'conditions' => [['and' => [['poll_id' => $poll],['winner = target'], ['round' => $round]]]]]);
-    }
-
-
     public function getTargetHighest($poll = null,$target = null)
     {
         $optTwo = $this->find('all',['fields' => 'optTwo', 'conditions' => [['and' => [['poll_id' => $poll], ['winner <> target' ], ['target' => $target]]]]])->toArray();
