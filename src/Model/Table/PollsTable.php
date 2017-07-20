@@ -47,10 +47,14 @@ class PollsTable extends Table
         $this->hasMany('Matches', [
             'foreignKey' => 'poll_id'
         ]);
-        $this->belongsToMany('Samples', [
+        /*$this->belongsToMany('Samples', [
             'foreignKey' => 'poll_id',
             'targetForeignKey' => 'sample_id',
             'joinTable' => 'samples_polls'
+        ]);*/
+
+        $this->belongsToMany('Samples', [
+            'through' => 'SamplesPolls'
         ]);
     }
 
@@ -161,10 +165,12 @@ class PollsTable extends Table
         return $this->Matches->exists(['poll_id' => $poll,'target' => $target,'winner is null']);
     }
 
+    /*return true if poll has more matches*/
     public function hasMoreMatches($poll = null)
     {
         return $this->Matches->exists(['poll_id' => $poll,'winner is null']);
     }
+
     /* returns null or last poll match*/
     public function getLastMatch($poll)
     {
@@ -188,6 +194,8 @@ class PollsTable extends Table
 
     public function getNext($poll = null)
     {
+        $samplesPolls = TableRegistry::get('SamplesPolls');
+
         // check if this exists
         if (!$this->exists(['id' => $poll]))
             return null;
@@ -208,24 +216,28 @@ class PollsTable extends Table
         $lowest = $this->Matches->getTargetLowest($poll, $match['target']);
         $lowestLength = count($lowest);
 
+        // set target rank sample
+
+
         if($highestLength == 1)
         {
-            //$this->SamplesPolls->rankSample($poll,$highest[0],$match['parent'],$match['placeat'],0);
+            $samplesPolls->rankSample($poll,$highest[0],$match['parent'],$match['placeAt'],0);
+            //
         }
         else if($highestLength > 1)
-        {
+        {                  //$poll_id,$samples, $round      $parent          $placeAt = null
             $this->setTarget($poll, $highest, null, $match['target'],1);
 
         }
-
-        //$this->SamplesPolls->rankSample($poll, $match['target'], $match['parent'], $match['placeat'], $highestLength);
+        $samplesPolls->rankSample($poll, $match['target'], $match['parent'], $match['placeat'], $highestLength);
 
         if ($lowestLength == 1)
         {
-            //$this->SamplesPolls->rankSample($poll, $lowest[0], $target, $placeAt, 0);
+            $samplesPolls->rankSample($poll, $lowest[0], $match['target'], $match['placeat'], 0);
         }
         else if($lowestLength > 1)
         {
+            //               $poll_id,$samples, $round      $parent          $placeAt = null
             $this->setTarget($poll, $lowest, null, $match['target'], 0);
         }
 
@@ -239,6 +251,7 @@ class PollsTable extends Table
         return $this->nextPair($poll);
     }
 
+    /*close poll, setting the close date to finished column*/
     public function setFinished($poll_id = null)
     {
         $poll = $this->get($poll_id);

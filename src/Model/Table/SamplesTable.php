@@ -46,10 +46,14 @@ class SamplesTable extends Table
         $this->belongsTo('ZoneCategories', [
             'foreignKey' => 'zone_category_id'
         ]);
-        $this->belongsToMany('Polls', [
+        /*$this->belongsToMany('Polls', [
             'foreignKey' => 'sample_id',
             'targetForeignKey' => 'poll_id',
             'joinTable' => 'samples_polls'
+        ]);*/
+
+        $this->belongsToMany('Polls', [
+            'through' => 'SamplesPolls'
         ]);
     }
 

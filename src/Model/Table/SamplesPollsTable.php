@@ -101,12 +101,13 @@ class SamplesPollsTable extends Table
     {
         $sample_poll_id = $this->find('all', ['fields' => ['id'], 'conditions' => [['and' => [['poll_id' => $poll_id], ['sample_id' => $sample_id]]]]])->first()['id'];
         $sample_poll = $this->get($sample_poll_id);
-        $sample_poll->set('position', $position);
+        $sample_poll->set('rank', $position);
+        $this->save($sample_poll);
     }
 
     public function getPosition($poll_id = null, $target = null)
     {
-        return $this->find('all',['conditions' => [ 'and' => [['poll_id' => $poll_id], ['target' => $target]]], 'fields' => ['position']])->first()['position'];
+        return $this->find('all',['conditions' => [ 'and' => [['poll_id' => $poll_id], ['sample_id' => $target]]], 'fields' => ['rank']])->first()['rank'];
 
     }
 
@@ -115,7 +116,7 @@ class SamplesPollsTable extends Table
         $position = $offset + 1;
         if($parent !== null)
         {
-            if($placeAt === 1)
+            if($placeAt === 0)
             {
                 $position = $this->getPosition($poll_id,$parent) + $offset + 1;
             }

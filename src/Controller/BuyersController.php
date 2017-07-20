@@ -55,6 +55,7 @@ class BuyersController extends AppController
     {
         $this->loadModel('Users');
         $this->loadModel('Polls');
+        $this->loadModel('samples_polls');
 
         $user = $this->Auth->user();
         $buyer = $this->Users->getBuyerId($user['id']);
