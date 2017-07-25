@@ -71,7 +71,6 @@ class HousesController extends AppController
         if ($this->request->is('post')) {
             $data = $this->request->getData();
 
-            echo json_encode($data);
             $zone_id = '';
 
 

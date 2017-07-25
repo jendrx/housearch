@@ -117,4 +117,6 @@ class ZonesTable extends Table
     {
         return $this->exists(['id' => $id, 'lug_code' => '999999']);
     }
+
+
 }

@@ -5,10 +5,11 @@
 ?>
 
 
-<div class="row info_content">
-    <?= $this->Form->create($house) ?>
-    <h4><?= __('Add House') ?></h4>
-    <div class="large-12 columns">
+<div class="row">
+
+    <div class="large-12 columns info_content">
+        <?= $this->Form->create($house) ?>
+        <h4><?= __('Add House') ?></h4>
 
 
         <div class="row">
@@ -342,8 +343,6 @@
             map.flyTo({
                 center: [coordinates.lon, coordinates.lat]
             });
-
-
             map.getSource('zones').setData(geoJSON);
 
         });

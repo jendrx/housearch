@@ -116,11 +116,22 @@ class SamplesPollsTable extends Table
         $position = $offset + 1;
         if($parent !== null)
         {
-            if($placeAt === 0)
+            if($placeAt == 0)
             {
                 $position = $this->getPosition($poll_id,$parent) + $offset + 1;
+            }
+            else
+            {
+                $position = $this->getPosition($poll_id,$parent) - $offset - 1;
             }
         }
         $this->setPosition($poll_id,$target,$position);
     }
+
+    public function getSampleRank($poll_id = null)
+    {
+        return $this->find('all', ['order' => ['rank' => 'asc'], 'conditions' => ['poll_id' => $poll_id],
+                                        'fields' => ['SamplesPolls.id','SamplesPolls.rank','Samples.id','Samples.lat', 'Samples.lon','Samples.zone_id','Samples.zone_category_id']])->contain(['Samples']);
+    }
+
 }

@@ -58,4 +58,33 @@ class PollsController extends AppController
         $this->set('_serialize', ['match_id', 'winner']);
     }
 
+    public function getRank()
+    {
+        $rank = null;
+        if($this->request->is('ajax'))
+        {
+            $params = $this->request->getQueryParams();
+            $poll_id = $params['poll_id'];
+            $rank = $this->Polls->getRank($poll_id);
+        }
+
+        $this->set(compact('rank'));
+        $this->set('_serialize',['rank']);
+    }
+
+    public function getResults()
+    {
+        $this->loadModel('Zones');
+
+        $this->loadModel('SamplesPolls');
+
+        /*Select zone_id, rank, geom_json from samples_polls
+	inner join samples on sample_id = samples.id
+	inner join Zones on Samples.zone_id = Zones.id where poll_id = 234 order by rank*/
+
+        $this->SamplesPolls->find('all', ['conditions' => ['poll_id' => $poll_id]]);
+
+    }
+
+
 }

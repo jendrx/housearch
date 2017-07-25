@@ -10,8 +10,8 @@
     <div id="col_content" class="large-12 columns info_content">
         <div class="row">
             <div id="voteBox">
-                <ul id="voteList">
-                    <li style="float: left;">
+                <ul id="voteList" >
+                    <li style="float: left; display:inline-block; padding:1%">
                         <div id="pano_left">
                             <a>
                                 <img>
@@ -19,7 +19,7 @@
                         </div>
 
                     </li>
-                    <li style="float: left;">
+                    <li style="float: left;display: inline-block; padding:1%">
                         <div id="pano_right">
                             <a>
                                 <img>
@@ -75,10 +75,14 @@
         }
     }
 
-
-    function getStreetViewURL(lat,lon,callback) {
+    function getStreetViewURL(lat,lon,width,height,callback) {
+        if (width == null || height == null)
+        {
+            width  = 470;
+            height = 300;
+        }
         var apiKey = 'AIzaSyD0L7yquC0pma5kVbzh_C_d6iLpiNGJwHE';
-        var url = "http://maps.googleapis.com/maps/api/streetview?size=470x300&location=" + lat + "," + lon + "&sensor=false";
+        var url = "http://maps.googleapis.com/maps/api/streetview?size="+ width + "x" + height + "&location=" + lat + "," + lon + "&sensor=false";
 
         $.get(url, function(data, textStatus, jqXHR) {
             console.log("fetched without api key");
@@ -147,7 +151,7 @@
                     if(data.done !== true)
                     {
                         current_match = data.pair;
-                        getStreetViewURL(data.pair.optOne.lat,data.pair.optOne.lon,function(url)
+                        getStreetViewURL(data.pair.optOne.lat,data.pair.optOne.lon,null,null,function(url)
                         {
                             left_done = true;
                             $("#pano_left img").attr('src',url);
@@ -155,7 +159,7 @@
                                 loadingDone();
                         });
 
-                        getStreetViewURL(data.pair.optTwo.lat,data.pair.optTwo.lon,function(url){
+                        getStreetViewURL(data.pair.optTwo.lat,data.pair.optTwo.lon,null,null,function(url){
                             right_done = true;
                             $("#pano_right img").attr('src',url);
                             if(left_done)
@@ -164,12 +168,43 @@
                     }
                     else
                     {
-                        alert('Done');
+
+                        $('#voteBox').hide();
+                        getRank(poll_id,showRank);
                     }
 
                 }
             });
 
+    }
+
+    function getRank(poll_id,callback) {
+        $.ajax(
+            {
+                type: 'get',
+                url: '/Polls/getRank',
+                dataType: 'json',
+                data: {
+                    'poll_id' : poll_id
+                },
+                success : function(response)
+                {
+                    callback(response.rank);
+                }
+            });
+    }
+
+    function showRank(data)
+    {
+        var pics;
+        $('#col_content').append('<div id="rankRow" class="row"><ul id=rankList></ul></div>');
+        for(i = 0; i < data.length; i++)
+        {
+           getStreetViewURL(data[i].sample.lat,data[i].sample.lon,200,200, function(url)
+           {
+               $('#rankList').append('<li style="display:inline-block; padding:1%;"><a> <img src="'+url+'"> </a></li>');
+           });
+        }
     }
 
 

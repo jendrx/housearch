@@ -215,13 +215,19 @@ class PollsTable extends Table
 
         $lowest = $this->Matches->getTargetLowest($poll, $match['target']);
         $lowestLength = count($lowest);
-
         // set target rank sample
 
+        $targetOffset = $highestLength;
+        if($match['placeat'] == 1)
+        {
+            $targetOffset = $lowestLength;
+        }
+
+        $samplesPolls->rankSample($poll, $match['target'], $match['parent'], $match['placeat'], $targetOffset);
 
         if($highestLength == 1)
         {
-            $samplesPolls->rankSample($poll,$highest[0],$match['parent'],$match['placeAt'],0);
+            $samplesPolls->rankSample($poll,$highest[0],$match['target'],1,0);
             //
         }
         else if($highestLength > 1)
@@ -229,11 +235,11 @@ class PollsTable extends Table
             $this->setTarget($poll, $highest, null, $match['target'],1);
 
         }
-        $samplesPolls->rankSample($poll, $match['target'], $match['parent'], $match['placeat'], $highestLength);
+
 
         if ($lowestLength == 1)
         {
-            $samplesPolls->rankSample($poll, $lowest[0], $match['target'], $match['placeat'], 0);
+            $samplesPolls->rankSample($poll, $lowest[0], $match['target'],0, 0);
         }
         else if($lowestLength > 1)
         {
@@ -259,6 +265,14 @@ class PollsTable extends Table
         $poll->set('finished',$ts);
         $this->save($poll);
     }
+
+    public function getRank($poll_id = null)
+    {
+        $samplesPolls = TableRegistry::get('SamplesPolls');
+
+        return $samplesPolls->getSampleRank($poll_id);
+    }
+
 
 
 }

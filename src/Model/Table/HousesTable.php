@@ -158,4 +158,16 @@ class HousesTable extends Table
 
         return $rules;
     }
+
+    public function getAll()
+    {
+        return $this->find('all');
+    }
+
+    public function getByZone($zone_id = null)
+    {
+        return $this->find('all', ['conditions' => ['zone_id' => $zone_id]]);
+    }
+
+
 }

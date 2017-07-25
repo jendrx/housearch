@@ -54,7 +54,8 @@ footer {
 }
 
 .info_content{
-    padding : 80px 80px;
+    padding : 5% 5%;
+    margin: 0 auto;
 }
 
 fieldset legend{
