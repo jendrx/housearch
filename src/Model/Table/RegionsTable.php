@@ -137,7 +137,6 @@ class RegionsTable extends Table
 
     }
 
-
     public function getCentroid($id = null)
     {
         $conn = ConnectionManager::get('default');

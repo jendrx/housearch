@@ -119,9 +119,9 @@
 
         <div class="row">
             <div class="large-6 columns">
-                <fieldset id ="location_fieldset" class="fieldset">
+                <fieldset id="location_fieldset" class="fieldset">
                     <legend> Location input</legend>
-                    <?= $this->Form->radio('location', [['value' => 0, "text" => 'Absolute','id' => '0'],['value' => 1, "text" => 'Zonal']]) ?>
+                    <?= $this->Form->radio('location', [['value' => 0, "text" => 'Absolute', 'id' => '0'], ['value' => 1, "text" => 'Zonal']]) ?>
                 </fieldset>
             </div>
         </div>

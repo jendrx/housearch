@@ -127,3 +127,16 @@ header .top-bar ul
     width: 100%;
 }
 
+
+/**** table****/
+.thead {
+    display: block;
+}
+.tbody {
+    display: block;
+    overflow-y: scroll;
+    max-height:400px;
+}
+.thead th, .tbody td {
+    width: 700px;
+}

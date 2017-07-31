@@ -169,5 +169,18 @@ class HousesTable extends Table
         return $this->find('all', ['conditions' => ['zone_id' => $zone_id]]);
     }
 
+    public function setGeoJSONProperty($house_id = null, $property = null, $value = null)
+    {
+        $house = $this->get($house_id);
+        $geoJson = json_decode($house['location_json']);
+        $geoJson['properties'][$property] = $value;
+        return json_encode($geoJson);
+    }
+
+    public function toFeatureCollection($houses)
+    {
+        return array('type' => 'FeatureCollection', 'features' => $houses);
+    }
+
 
 }

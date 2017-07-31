@@ -118,5 +118,16 @@ class ZonesTable extends Table
         return $this->exists(['id' => $id, 'lug_code' => '999999']);
     }
 
+    public function setZoneProperty($zone_id = null, $property = null, $value = null)
+    {
+        $zone = $this->get($zone_id);
+
+        if ($property == null or $value == null)
+            return $zone;
+
+        $zone['geom_json']['properties'][$property] = $value;
+        return $zone;
+    }
+
 
 }

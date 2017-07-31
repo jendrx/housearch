@@ -30,7 +30,7 @@ class MapsController extends AppController
 
         if ($this->request->is('ajax')) {
 
-            // get camera center coordintes
+            // get camera center coordinates
             $camera = json_decode($this->Regions->getCentroid($id));
 
             // get  zones geoJson info  that belongs to $id

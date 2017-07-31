@@ -1,12 +1,12 @@
 <?php
-    /**
-     * Created by PhpStorm.
-     * User: rom
-     * Date: 6/19/17
-     * Time: 2:53 PM
-     */ ?>
+/**
+ * Created by PhpStorm.
+ * User: rom
+ * Date: 7/25/17
+ * Time: 9:56 AM
+ */?>
 
-<!--<div class="row">
+<div class="row">
     <div id="col_content" class="large-12 columns info_content">
         <div class="row">
             <div id="voteBox">
@@ -33,41 +33,10 @@
             </div>
         </div>
     </div>
-</div>-->
-
-<div class="row">
-    <div class="large-12 columns info_content">
-        <div class="row">
-            <div class="large-12 columns">
-                <h4> My Polls</h4>
-                <table class="hover">
-                    <thead class="thead">
-                    <tr>
-                        <th>
-                            No
-                        </th>
-                        <th>
-                            Date
-                        </th>
-
-                    </tr>
-                    </thead>
-                    <tbody class="tbody">
-                    <?php foreach ($buyer['polls'] as $poll): ?>
-                        <tr>
-                            <td><?= $this->Html->link($poll->id, ['controller' => 'Polls','action' => 'result', $poll->id]) ?></td>
-                            <td><?=$this->Html->link($poll->finished,['controller' => 'Polls', 'action' => 'result',$poll->id])?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
 </div>
 
 
-<!--<script>
+<script>
 
     var left_done = false;
     var right_done = false;
@@ -81,7 +50,7 @@
         return{
             setPoll : function(poll)
             {
-              this.poll = poll;
+                this.poll = poll;
             },
             getPoll : function()
             {
@@ -231,10 +200,10 @@
         $('#col_content').append('<div id="rankRow" class="row"><ul id=rankList></ul></div>');
         for(i = 0; i < data.length; i++)
         {
-           getStreetViewURL(data[i].sample.lat,data[i].sample.lon,200,200, function(url)
-           {
-               $('#rankList').append('<li style="display:inline-block; padding:1%;"><a> <img src="'+url+'"> </a></li>');
-           });
+            getStreetViewURL(data[i].sample.lat,data[i].sample.lon,200,200, function(url)
+            {
+                $('#rankList').append('<li style="display:inline-block; padding:1%;"><a> <img src="'+url+'"> </a></li>');
+            });
         }
     }
 
@@ -242,8 +211,8 @@
 
 
     $(document).ready(function () {
-        var pollInfo = <?php /*echo $poll */?>;
+        var pollInfo = <?php echo $poll ?>;
         getNext(pollInfo['id']);
     });
-</script>-->
+</script>
 

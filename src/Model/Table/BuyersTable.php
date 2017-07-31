@@ -51,6 +51,9 @@ class BuyersTable extends Table
         $this->belongsTo('Users', [
             'foreignKey' => 'user_id'
         ]);
+
+        $this->hasMany('Polls',
+            ['foreignKey' => 'buyer_id']);
     }
 
     /**
