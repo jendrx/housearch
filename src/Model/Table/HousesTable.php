@@ -106,7 +106,7 @@ class HousesTable extends Table
             ->allowEmpty('url_ad');
 
         $validator
-            ->allowEmpty('location');
+            ->allowEmpty('geom');
 
         $validator
             ->integer('energy_certification_year')
@@ -132,7 +132,7 @@ class HousesTable extends Table
             ->longitude('lon');
 
         $validator
-            ->allowEmpty('location_json');
+            ->allowEmpty('geom_json');
 
         $validator
             ->allowEmpty('path_pic');

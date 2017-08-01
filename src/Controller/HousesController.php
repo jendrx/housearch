@@ -33,7 +33,7 @@ class HousesController extends AppController
         /*$this->paginate = [
             'contain' => ['EnergyCertifications', 'Conservations', 'Conditions', 'Garages', 'Outbuildings', 'Zones', 'Sellers']
         ];*/
-        $houses = $this->paginate($this->Houses);
+        $houses = $this->paginate($this->Houses,['maxLimit' => 10]);
         $this->set(compact('houses'));
         $this->set('_serialize', ['houses']);
     }

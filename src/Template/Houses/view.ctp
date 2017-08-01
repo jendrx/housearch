@@ -58,7 +58,7 @@
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Conservation',['value' => $house->conservation->description, 'disabled' => true])?>
+                <?= $house->has('conservation') ? $this->Form->control('Conservation',['value' => $house->conservation->description, 'disabled' => true]): $this->Form->control('Conservation',['value' => 'None', 'disabled' => true])?>
             </div>
         </div>
 
