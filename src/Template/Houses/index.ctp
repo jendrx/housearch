@@ -3,10 +3,10 @@
  * @var \App\View\AppView $this
  */
 ?>
-<div class="row">
-    <div class="large-9 medium-8 columns info_content">
+<div class="row info_content">
+    <div class="large-9 medium-8 columns">
         <h3><?= __('Houses') ?></h3>
-        <table cellpadding="0" cellspacing="0">
+        <table>
             <thead>
             <tr>
                 <!--<th scope="col"><?= $this->Paginator->sort('id') ?></th>-->

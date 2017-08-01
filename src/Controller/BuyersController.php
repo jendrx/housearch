@@ -54,10 +54,20 @@ class BuyersController extends AppController
     {
         $this->loadModel('Users');
         $user = $this->Auth->user();
-        $buyer = $this->Buyers->get($this->Users->getBuyerId($user['id']), ['contain' => ['Polls' => ['conditions' => ['finished is not null']]]]);
+        $buyer = $this->Buyers->get($this->Users->getBuyerId($user['id']));
 
-        $this->set(compact('buyer'));
-        $this->set('_serialize', ['buyer']);
+        $this->paginate = array(
+            'limit' => 10,
+            'order' => array( // sets a default order to sort by
+                'Polls.finished' => 'desc'
+            )
+        );
+
+        $polls = $this->paginate($this->Buyers->Polls->find('all', ['conditions' => ['and' => [['buyer_id' => $buyer['id']],['finished is not null']]]])
+            ,['sortWhitelist' => ['Polls.finished']]);
+
+        $this->set(compact('buyer','polls'));
+        $this->set('_serialize', ['buyer', 'polls']);
     }
 
     public function explore()

@@ -3,40 +3,40 @@
   * @var \App\View\AppView $this
   */
 ?>
-<div class=" row">
+<div class="row">
 
-    <div class="large-6 columns">
+    <div class="large-6 columns ">
         <!--<h3><?= h($house->id) ?></h3>-->
 
         <h4> General Information</h4>
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Price',['value' => $house->price])?>
+                <?= $this->Form->control('Price',['value' => $house->price, 'disabled' => true])?>
             </div>
         </div>
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Type',['value' => $house->house_type->description])?>
+                <?= $this->Form->control('Type',['value' => $house->house_type->description,'disabled' => true])?>
             </div>
         </div>
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Year',['value' => $house->construction_year])?>
+                <?= $this->Form->control('Year',['value' => $house->construction_year,'disabled' => true])?>
             </div>
         </div>
 
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Area',['value' => $house->area])?>
+                <?= $this->Form->control('Area',['value' => $house->area,'disabled' => true])?>
             </div>
         </div>
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Url',['value' => $house->url_ad])?>
+                <?= $this->Form->control('Url',['value' => $house->url_ad, 'disabled' => true])?>
             </div>
         </div>
     </div>
@@ -52,19 +52,19 @@
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Condition',['value' => $house->condition->description])?>
+                <?= $this->Form->control('Condition',['value' => $house->condition->description, 'disabled' => true])?>
             </div>
         </div>
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Conservation',['value' => $house->conservation->description])?>
+                <?= $this->Form->control('Conservation',['value' => $house->conservation->description, 'disabled' => true])?>
             </div>
         </div>
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Energy Certification',['value' => $house->energy_certification->description,'type' => 'text'])?>
+                <?= $this->Form->control('Energy Certification',['value' => $house->energy_certification->description,'type' => 'text', 'disabled' => true])?>
             </div>
         </div>
 
@@ -77,19 +77,19 @@
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Rooms',['value' => $house->rooms])?>
+                <?= $this->Form->control('Rooms',['value' => $house->rooms, 'disabled' => true])?>
             </div>
         </div>
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Garage',['value' => $house->garage->description])?>
+                <?= $this->Form->control('Garage',['value' => $house->garage->description, 'disabled' => true])?>
             </div>
         </div>
 
         <div class="row">
             <div class="large-12 columns">
-                <?= $this->Form->control('Outbuilding',['value' => $house->outbuilding->description])?>
+                <?= $this->Form->control('Outbuilding',['value' => $house->outbuilding->description, 'disabled' => true])?>
             </div>
         </div>
         <div class="row">
