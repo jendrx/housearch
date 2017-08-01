@@ -26,13 +26,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <?php echo $this->element('head'); ?>
     <?= $this->Html->script('//code.jquery.com/jquery-2.1.3.min.js') ?>
-    <?= $this->Html->script('jquery-ui-1.12.1/jquery-ui.min.js') ?>
     <?= $this->Html->script('//cdn.jsdelivr.net/foundation/6.0.6/foundation.min.js') ?>
     <?= $this->Html->script('//api.mapbox.com/mapbox-gl-js/v0.38.0/mapbox-gl.js')?>
     <?= $this->Html->script('//npmcdn.com/@turf/turf/turf.min.js')?>
 
 
-    <!--<?= $this->Html->script('vendor/app.js') ?>-->
 
 
 

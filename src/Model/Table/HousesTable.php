@@ -1,6 +1,7 @@
 <?php
 namespace App\Model\Table;
 
+use Cake\I18n\Time;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -97,6 +98,7 @@ class HousesTable extends Table
         $validator
             ->integer('construction_year')
             ->greaterThanOrEqual('construction_year',0)
+            ->lessThanOrEqual('construction_year', Time::now()->year)
             ->notEmpty('construction_year');
 
         $validator

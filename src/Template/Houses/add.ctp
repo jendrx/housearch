@@ -42,7 +42,7 @@
 
         <div class="row">
             <div class="large-6 columns">
-                <?= $this->Form->control('zone_id', ['id' => 'input_zone_id', 'type' => 'text']) ?>
+                <?= $this->Form->hidden('zone_id', ['id' => 'input_zone_id']) ?>
             </div>
 
         </div>
@@ -105,14 +105,14 @@
 
         <div class="row">
             <div class="large-6 columns">
-                <?=  $this->Form->control('lat', ['id' => 'lat_id']); ?>
+                <?=  $this->Form->hidden('lat', ['id' => 'lat_id']); ?>
             </div>
 
         </div>
 
         <div class="row">
             <div class="large-6 columns">
-                <?=  $this->Form->control('lon', ['id' => 'lon_id']) ?>
+                <?=  $this->Form->hidden('lon', ['id' => 'lon_id']) ?>
             </div>
 
         </div>

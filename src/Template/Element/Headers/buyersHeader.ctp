@@ -14,6 +14,7 @@
         </div>
         <div class="top-bar-right">
             <ul class="menu menu-hover-lines">
+                <li><?= $this->Html->link(__('Home'), ['controller' => 'Buyers', 'action' => 'home'])?></li>
                 <li><?= $this->Html->link(__('List Houses'), ['controller' => 'houses', 'action' => 'index'])?></li>
                 <li><?= $this->Html->link(__('Explore'), ['controller' => 'Buyers', 'action' => 'explore'])?></li>
                 <li><?= $this->Html->link(__('Logout'), ['controller' => 'Users', 'action' => 'Logout'])?></li>

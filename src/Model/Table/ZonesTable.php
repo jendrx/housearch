@@ -129,5 +129,22 @@ class ZonesTable extends Table
         return $zone;
     }
 
+    public function getCentroid($id = null)
+    {
+        $conn = ConnectionManager::get('default');
+
+        $stmt = $conn->prepare('Select row_to_json(row) as centroid  from (Select ST_X(centroid) as lon, ST_Y(centroid) as lat  from  
+			( Select ST_Centroid((Select  geom from zones where id =:r_id)) as centroid) p) row');
+
+        $stmt->bindValue('r_id', $id, 'integer');
+
+        $stmt->execute();
+        $row = $stmt->fetch('assoc')['centroid'];
+
+        return $row;
+
+    }
+
+
 
 }
