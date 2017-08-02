@@ -40,7 +40,6 @@ class HousesController extends AppController
         $house = $this->Houses->get($id, [
             'contain' => ['EnergyCertifications', 'Conservations', 'Conditions', 'Garages', 'Outbuildings', 'Zones', 'Sellers', 'HouseTypes']
         ]);
-
         $this->set('house', $house);
         $this->set('_serialize', ['house']);
     }
@@ -55,15 +54,16 @@ class HousesController extends AppController
         $this->loadModel('Regions');
         $this->loadModel('Zones');
         $this->loadModel('Users');
-        $house = $this->Houses->newEntity();
 
+        $house = $this->Houses->newEntity();
         if ($this->request->is('post')) {
             $data = $this->request->getData();
+            echo json_encode($data);
 
             $zone_id = '';
             $lat = null;
             $lon = null;
-
+            $location = '';
 
             // if absolute
             if($data['lat'] != '' or $data['lon'] != '')
@@ -76,6 +76,7 @@ class HousesController extends AppController
                 }
                 $lat = $data['lat'];
                 $lon = $data['lon'];
+                $location = 'a';
             }
             //if zonal
             else
@@ -89,21 +90,27 @@ class HousesController extends AppController
                     $centroid = json_decode($this->Zones->getCentroid($zone_id));
                     $lat = $centroid->lat;
                     $lon = $centroid->lon;
+                    $location = 'z';
                 }
             }
 
 
             if($zone_id != '')
             {
-                $user = $this->Auth->user();
 
+                $house = $this->Houses->patchEntity($house,$data,
+                    ['fieldList' =>
+                        ['price', 'area', 'construction_year', 'condition_id', 'rooms',
+                            'garage_id', 'outbuilding_id', 'outbuilding_area', 'energy_certification_id', 'energy_certification_year', 'house_type_id', 'url_ad']]);
+
+
+                $user = $this->Auth->user();
                 $seller_id = $this->Users->getSellerId($user['id']);
                 $house->set('seller_id',$seller_id);
-                $house->set('price', $data['price']);
+                /*$house->set('price', $data['price']);
                 $house->set('area', $data['area']);
                 $house->set('construction_year', $data['construction_year']);
                 $house->set('condition_id', $data['condition_id']);
-                $house->set('zone_id', $zone_id);
                 $house->set('rooms', $data['rooms']);
                 $house->set('garage_id', $data['garage_id']);
                 $house->set('outbuilding_id', $data['outbuilding_id']);
@@ -111,11 +118,15 @@ class HousesController extends AppController
                 $house->set('energy_certification_id', $data['energy_certification_id']);
                 $house->set('energy_certification_year', $data['energy_certification_year']);
                 $house->set('house_type_id', $data['house_type_id']);
-                $house->set('url_ad', $data['url_ad']);
+                $house->set('url_ad', $data['url_ad']);*/
+                $house->set('zone_id', $zone_id);
                 $house->set('lat',$lat);
                 $house->set('lon',$lon);
+                $house->set('geom',$this->Houses->toGeometry($lat,$lon));
+                $house->set('geom_json',json_decode($this->Houses->toGeoJSON($lat,$lon)));
+                $house->set('location',$location);
 
-
+                echo json_encode($house);
                 //"location":"1" get geom from lat lon
                 if ($this->Houses->save($house)) {
                     $this->Flash->success(__('The house has been saved.'));

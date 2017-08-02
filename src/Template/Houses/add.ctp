@@ -20,7 +20,7 @@
 
         <div class="row">
             <div class="large-6 columns">
-                            <?= $this->Form->control('area',['min' => '0']) ?>
+                            <?= $this->Form->control('area') ?> <!-- remove minValue to test -->
 
                         </div>
 
@@ -35,8 +35,8 @@
 
         <div class="row">
             <div class="large-6 columns">
-                            <?=$this->Form->control('condition_id', ['options' => $conditions]) ?>
-                        </div>
+                            <?=$this->Form->control('condition_id') ?>
+            </div>
 
         </div>
 
@@ -55,7 +55,7 @@
 
         <div class="row">
             <div class="large-6 columns">
-                <?=  $this->Form->control('garage_id', ['options' => $garages]) ?>
+                <?=  $this->Form->control('garage_id') ?>
             </div>
         </div>
 
@@ -63,7 +63,7 @@
             <div class="large-6 columns">
                 <div class="row">
                     <div class="large-6 columns">
-                        <?= $this->Form->control('outbuilding_id', ['options' => $outbuildings]) ?>
+                        <?= $this->Form->control('outbuilding_id') ?>
                     </div>
                     <div class="large-6 columns">
                         <?= $this->Form->control('outbuilding_area',['min' => '0']) ?>
@@ -78,7 +78,7 @@
             <div class="large-6 columns">
                 <div class="row">
                     <div class="large-6 columns">
-                                    <?= $this->Form->control('energy_certification_id', ['options' => $energyCertifications]) ?>
+                                    <?= $this->Form->control('energy_certification_id') ?>
                                 </div>
                     <div class="large-6 columns">
                                     <?= $this->Form->control('energy_certification_year',['min' => '0']) ?>

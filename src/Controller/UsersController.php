@@ -68,14 +68,7 @@ class UsersController extends AppController
             $data =  $this->request->getData();
             $user = $this->Users->patchEntity($user, $data);
 
-            echo json_encode($data);
-
-
-
             if ($this->Users->save($user)) {
-
-                echo json_encode($user);
-
                 $this->Flash->success(__('The user has been saved.'));
             }
             $this->Flash->error(__('The user could not be saved. Please, try again.'));

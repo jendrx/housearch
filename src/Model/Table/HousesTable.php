@@ -2,10 +2,10 @@
 namespace App\Model\Table;
 
 use Cake\I18n\Time;
-use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
+use Cake\Datasource\ConnectionManager;
 
 /**
  * Houses Model
@@ -182,6 +182,45 @@ class HousesTable extends Table
     public function toFeatureCollection($houses)
     {
         return array('type' => 'FeatureCollection', 'features' => $houses);
+    }
+
+    public function toGeometry($lat = null, $lon = null,$srid = null)
+    {
+        if($srid == null)
+            $srid = 4326;
+
+        $conn = ConnectionManager::get('default');
+
+        /*$stmt = $conn->prepare('Select row_to_json(row) as centroid  from (Select ST_X(centroid) as lon, ST_Y(centroid) as lat  from
+			( Select ST_Centroid((Select  geom from regions where id =:r_id)) as centroid) p) row');*/
+
+        $stmt = $conn->prepare('Select geom from ST_SetSRID(ST_MakePoint(:r_lon,:r_lat),:r_srid)geom');
+        $stmt->bindValue('r_lat', $lat, 'float');
+        $stmt->bindValue('r_lon',$lon, 'float');
+        $stmt->bindValue('r_srid',$srid,'integer');
+        $stmt->execute();
+        $row = $stmt->fetch('assoc')['geom'];
+        return $row;
+
+    }
+
+    public function toGeoJSON($lat = null, $lon = null, $srid = null)
+    {
+        if($srid == null)
+            $srid = 4326;
+
+        $conn = ConnectionManager::get('default');
+
+        /*$stmt = $conn->prepare('Select row_to_json(row) as centroid  from (Select ST_X(centroid) as lon, ST_Y(centroid) as lat  from
+			( Select ST_Centroid((Select  geom from regions where id =:r_id)) as centroid) p) row');*/
+
+        $stmt = $conn->prepare('Select geom_json::json from ST_AsGeoJSON(ST_SetSRID(ST_MakePoint(:r_lon,:r_lat),:r_srid))geom_json');
+        $stmt->bindValue('r_lat', $lat, 'float');
+        $stmt->bindValue('r_lon',$lon, 'float');
+        $stmt->bindValue('r_srid',$srid,'integer');
+        $stmt->execute();
+        $row = $stmt->fetch('assoc')['geom_json'];
+        return $row;
     }
 
 
