@@ -140,3 +140,10 @@ header .top-bar ul
 .thead th, .tbody td {
     width: 700px;
 }
+
+/*add form message*/
+form .error-message
+{
+    color: #FFFFFF;
+    background: #C3232D;
+}

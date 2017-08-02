@@ -97,25 +97,22 @@ class HousesController extends AppController
 
             if($zone_id != '')
             {
+                $user = $this->Auth->user();
+                $seller_id = $this->Users->getSellerId($user['id']);
 
                 $house = $this->Houses->patchEntity($house,$data,
                     ['fieldList' =>
                         ['price', 'area', 'construction_year', 'condition_id', 'rooms',
                             'garage_id', 'outbuilding_id', 'outbuilding_area', 'energy_certification_id', 'energy_certification_year', 'house_type_id', 'url_ad']]);
 
-
-                $user = $this->Auth->user();
-                $seller_id = $this->Users->getSellerId($user['id']);
-                $house->set('seller_id',$seller_id);
+                $house->set('seller_id', $seller_id);
                 $house->set('zone_id', $zone_id);
-                $house->set('lat',$lat);
-                $house->set('lon',$lon);
-                $house->set('geom',$this->Houses->toGeometry($lat,$lon));
-                $house->set('geom_json',json_decode($this->Houses->toGeoJSON($lat,$lon)));
-                $house->set('location',$location);
+                $house->set('lat', $lat);
+                $house->set('lon', $lon);
+                $house->set('geom', $this->Houses->toGeometry($lat,$lon));
+                $house->set('geom_json', json_decode($this->Houses->toGeoJSON($lat,$lon)));
+                $house->set('location', $location);
 
-                echo json_encode($house);
-                //"location":"1" get geom from lat lon
                 if ($this->Houses->save($house)) {
                     $this->Flash->success(__('The house has been saved.'));
                     return $this->redirect(['action' => 'index']);
