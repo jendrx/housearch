@@ -58,8 +58,6 @@ class HousesController extends AppController
         $house = $this->Houses->newEntity();
         if ($this->request->is('post')) {
             $data = $this->request->getData();
-            echo json_encode($data);
-
             $zone_id = '';
             $lat = null;
             $lon = null;
@@ -93,7 +91,6 @@ class HousesController extends AppController
                     $location = 'z';
                 }
             }
-
 
             if($zone_id != '')
             {
