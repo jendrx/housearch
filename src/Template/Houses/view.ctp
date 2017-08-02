@@ -110,9 +110,10 @@
         var zone = houseData.zone;
         var centroid = turf.centroid(zone.geom_json).geometry.coordinates;
 
+        console.log(houseData);
 
         var container_id = 'hmap';
-        var style = 'mapbox://styles/mapbox/streets-v9';
+        var style = 'mapbox://styles/mapbox/streets-v8';
         var center = [centroid[0], centroid[1]];
         var zoom = 14;
 
@@ -129,9 +130,10 @@
         });
 
 
+
+
         hmap.on('load',function()
         {
-
             hmap.addSource('zones', {
                 'type': 'geojson',
                 'data': {
@@ -157,30 +159,26 @@
                 'id': 'zone-borders',
                 'type': 'line',
                 'source': 'zones',
-                'layout': {'visibility' : 'visible' },
+                'layout': {'visibility' : 'visible'},
                 'paint': {
                     'line-color': '#000',
-                    'line-width': 1,
-
+                    'line-width': 1
                 }
             });
 
-            hmap.addLayer({
-                "id": "zone-fills-hover",
-                "type": "fill",
-                "source": "zones",
-                "layout": { 'visibility' : 'none' },
-                "paint": {
-                    "fill-color": "#627BC1",
-                    "fill-opacity": 1
-                },
-                "filter": ['==', 'id', '']
-            });
+
+            /*hmap.addLayer({
+                'id': 'zone-borders',
+                'type': 'symbol',
+                'source': 'zones',
+                'layout': {'visibility' : 'visible',
+                    'icon-image': 'marker-15'},
+                'paint': {
+                    'line-color': '#000',
+                    'line-width': 1
+                }
+            });*/
         });
-
-
-
-        //hmap.getSource('zones').setData(polygon);
     });
 
 </script>
