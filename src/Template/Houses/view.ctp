@@ -107,8 +107,6 @@
     {
 
         var houseData = <?php echo $house; ?>;
-
-
         var zone = houseData.zone;
         var centroid = turf.centroid(zone.geom_json).geometry.coordinates;
 
@@ -186,41 +184,3 @@
     });
 
 </script>
-
-
-
-
-
-      <!--  <table class="vertical-table">
-            <tr>
-                <th scope="row"><?= __('Location') ?></th>
-                <td><?= h($house->location) ?></td>
-            </tr>
-            <tr>
-                <th scope="row"><?= __('Seller') ?></th>
-                <td><?= $house->has('seller') ? $this->Html->link($house->seller->id, ['controller' => 'Sellers', 'action' => 'view', $house->seller->id]) : '' ?></td>
-            </tr>
-            <tr>
-                <th scope="row"><?= __('Lat') ?></th>
-                <td><?= $this->Number->format($house->lat) ?></td>
-            </tr>
-            <tr>
-                <th scope="row"><?= __('Lon') ?></th>
-                <td><?= $this->Number->format($house->lon) ?></td>
-            </tr>
-            <tr>
-                <th scope="row"><?= __('Created') ?></th>
-                <td><?= h($house->created) ?></td>
-            </tr>
-        </table>
-        <div class="row">
-            <h4><?= __('Url Ad') ?></h4>
-            <?= $this->Text->autoParagraph(h($house->url_ad)); ?>
-        </div>
-        <div class="row">
-            <h4><?= __('Path Pic') ?></h4>
-            <?= $this->Text->autoParagraph(h($house->path_pic)); ?>
-        </div>
-    </div>
-
-</div>-->
