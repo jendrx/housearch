@@ -107,18 +107,6 @@ class HousesController extends AppController
                 $user = $this->Auth->user();
                 $seller_id = $this->Users->getSellerId($user['id']);
                 $house->set('seller_id',$seller_id);
-                /*$house->set('price', $data['price']);
-                $house->set('area', $data['area']);
-                $house->set('construction_year', $data['construction_year']);
-                $house->set('condition_id', $data['condition_id']);
-                $house->set('rooms', $data['rooms']);
-                $house->set('garage_id', $data['garage_id']);
-                $house->set('outbuilding_id', $data['outbuilding_id']);
-                $house->set('outbuilding_area', $data['outbuilding_area']);
-                $house->set('energy_certification_id', $data['energy_certification_id']);
-                $house->set('energy_certification_year', $data['energy_certification_year']);
-                $house->set('house_type_id', $data['house_type_id']);
-                $house->set('url_ad', $data['url_ad']);*/
                 $house->set('zone_id', $zone_id);
                 $house->set('lat',$lat);
                 $house->set('lon',$lon);
