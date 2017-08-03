@@ -6,7 +6,6 @@
 <div class="row">
 
     <div class="large-6 columns ">
-        <!--<h3><?= h($house->id) ?></h3>-->
 
         <h4> General Information</h4>
         <div class="row">
@@ -41,7 +40,7 @@
         </div>
     </div>
     <div class="large-6 columns">
-        <div id="hmap" style="height:50vh;">
+        <div id="map" style="height:50vh;">
 
         </div>
     </div>
@@ -103,81 +102,97 @@
 
 <script>
 
+
+    function territoryCentroid(geometry)
+    {
+        return turf.centroid(geometry).geometry.coordinates;
+    }
+
+    function initMap(container_id,style,zoom,center)
+    {
+        mapboxgl.accessToken = 'pk.eyJ1Ijoicm9tZW5kb25jYSIsImEiOiJjaXpxd2FwOTIwMDE4MzJzNzJwZjdja3Z0In0.Kk5Lftir9LipsVFcU4wvwg';
+
+        var map = new mapboxgl.Map(
+            {
+
+                container: container_id,
+                style: style,
+                zoom: zoom,
+                center: center,
+                renderWorldCopies: false
+            }
+        );
+        return map;
+    }
+
     $(document).ready(function()
     {
-
         var houseData = <?php echo $house; ?>;
         var zone = houseData.zone;
-        var centroid = turf.centroid(zone.geom_json).geometry.coordinates;
+        var centroid = territoryCentroid(zone.geom_json);
+
+        var hmap = initMap('map','mapbox://styles/mapbox/streets-v8',14,[centroid[0], centroid[1]]);
 
         console.log(houseData);
-
-        var container_id = 'hmap';
-        var style = 'mapbox://styles/mapbox/streets-v8';
-        var center = [centroid[0], centroid[1]];
-        var zoom = 14;
-
-        var token = 'pk.eyJ1Ijoicm9tZW5kb25jYSIsImEiOiJjaXpxd2FwOTIwMDE4MzJzNzJwZjdja3Z0In0.Kk5Lftir9LipsVFcU4wvwg';
-
-        mapboxgl.accessToken = token;
-
-        var hmap = new mapboxgl.Map({
-            container: container_id,
-            style: style,
-            zoom: zoom,
-            center: center,
-            renderWorldCopies: false
-        });
-
-
 
 
         hmap.on('load',function()
         {
-            hmap.addSource('zones', {
+            hmap.addSource('geometry', {
                 'type': 'geojson',
                 'data': {
                     "type": "FeatureCollection",
-                    "features": [zone.geom_json]
+                    "features": []
                 }
             });
 
+            if(houseData.location === 'z')
+            {
 
 
-            hmap.addLayer({
-                'id': 'zone-fills',
-                'type': 'fill',
-                'source': 'zones',
-                'layout': { 'visibility' : 'visible' },
-                'paint': {
-                    "fill-color": "#627BC1",
-                    "fill-opacity" : 0.7
-                }
-            });
+                hmap.addLayer({
+                    'id': 'zone-fills',
+                    'type': 'fill',
+                    'source': 'geometry',
+                    'layout': { 'visibility' : 'visible' },
+                    'paint': {
+                        "fill-color": "#627BC1",
+                        "fill-opacity" : 0.7
+                    }
+                });
 
-            hmap.addLayer({
-                'id': 'zone-borders',
-                'type': 'line',
-                'source': 'zones',
-                'layout': {'visibility' : 'visible'},
-                'paint': {
-                    'line-color': '#000',
-                    'line-width': 1
-                }
-            });
+                hmap.addLayer({
+                    'id': 'boundaries',
+                    'type': 'line',
+                    'source': 'geometry',
+                    'layout': {'visibility' : 'visible'},
+                    'paint': {
+                        'line-color': '#000',
+                        'line-width': 1
+                    }
+                });
 
+                hmap.getSource('geometry').setData(zone.geom_json);
+            }
+            else
+            {
+                hmap.addLayer({
+                    'id': 'pointInterest',
+                    'type': 'symbol',
+                    'source': 'geometry',
+                    'layout': {
+                        'visibility' : 'visible',
+                        'icon-image' : 'marker-15'
 
-            /*hmap.addLayer({
-                'id': 'zone-borders',
-                'type': 'symbol',
-                'source': 'zones',
-                'layout': {'visibility' : 'visible',
-                    'icon-image': 'marker-15'},
-                'paint': {
-                    'line-color': '#000',
-                    'line-width': 1
-                }
-            });*/
+                    },
+                    'paint' : {
+                        'icon-color' : '#d00'
+                    }
+
+                });
+                hmap.getSource('geometry').setData(houseData.geom_json);
+            }
+
         });
     });
 
